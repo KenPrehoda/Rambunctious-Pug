@@ -29,5 +29,5 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = 800
         if self.rect.top <= 0:
             self.rect.top = 0
-        elif self.rect.bottom >= 600:
-            self.rect.bottom = 600
+        elif self.rect.bottom >= 516:
+            self.rect.bottom = 516

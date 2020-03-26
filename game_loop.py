@@ -6,6 +6,7 @@ from enemy import Enemy
 from ground import Ground
 # import pygame.locals for easier access to key coordinates
 from pygame.locals import *
+framelock = pygame.time.Clock()
 
 # initialize pygame
 pygame.init()
@@ -62,4 +63,8 @@ while running:
     if pygame.sprite.spritecollideany(player, enemies):
         player.kill()
 
+    
+    
+
     pygame.display.flip()
+    framelock.tick(60)
