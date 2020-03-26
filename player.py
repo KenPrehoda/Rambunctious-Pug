@@ -1,11 +1,15 @@
 import pygame
 from pygame.locals import *
+from sprites import SpriteSheet
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
-        self.image = pygame.image.load('assets/jet.png').convert()
-        self.image.set_colorkey((255, 255, 255), RLEACCEL)
+        #sheet = SpriteSheet(pygame.image.load('assets/pug_sheet.png').convert(),32,32)
+        sheet = pygame.image.load('assets/pug_sheet.png').convert()
+        self.image = pygame.Surface((32, 32)).convert()
+        self.image.blit(sheet, (0, 0), (0, 0, 32, 32))
+        self.image.set_colorkey((0, 255, 0))
         self.rect = self.image.get_rect()
 
     def update(self, pressed_keys):

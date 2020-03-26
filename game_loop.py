@@ -9,10 +9,10 @@ from pygame.locals import *
 
 # initialize pygame
 pygame.init()
-
+SCREEN_SIZE = (800,600)
 # create the screen object
 # here we pass it a size of 800x600
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode(SCREEN_SIZE)
 
 # Create a custom event for adding a new enemy.
 ADDENEMY = pygame.USEREVENT + 1
@@ -23,12 +23,13 @@ pygame.time.set_timer(ADDCLOUD, 1000)
 # create our 'player', right now he's just a rectangle
 player = Player()
 
-background = pygame.Surface(screen.get_size())
+background = pygame.Surface(
+    screen.get_size(), pygame.DOUBLEBUF | pygame.HWSURFACE,32)
 background.fill((135, 206, 250))
 
 enemies = pygame.sprite.Group()
 clouds = pygame.sprite.Group()
-ground = Ground(Rect(0,300,800,300),5)
+ground = Ground(Rect(0,500,800,300),5)
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 

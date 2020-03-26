@@ -6,15 +6,13 @@ import random
 class GroundTile(pygame.sprite.Sprite):
     def __init__(self,type,rect,speed):
         super(GroundTile, self).__init__()
-        self.image = pygame.image.load(f'assets/{type}.png').convert()
-        self.image.set_colorkey((0, 0, 0), RLEACCEL)
+        self.image = pygame.image.load(f'assets/{type}.png').convert_alpha()
+        #self.image.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = rect
         self.speed = speed
 
     def update(self):
         self.rect.move_ip(-self.speed, 0)
-        #if self.rect.right < 0:
-            #self.kill()
 
 
 class Ground(pygame.sprite.Group):
@@ -28,12 +26,16 @@ class Ground(pygame.sprite.Group):
         for y in range(y_tiles):
             for x in range(x_tiles):
                 if y == 0:
-                    type = 'plant'
+                    if random.randint(1,10) > 8:
+                        type = 'plant'
+                    else:
+                        type = None
                 elif y == 1:
                     type = 'grass'
                 else:
                     type = 'dirt'
-                self.add(GroundTile(type,Rect(16*x+self.screen_rect.left,16*y+self.screen_rect.top,16,16),self.speed))
+                if type:
+                    self.add(GroundTile(type,Rect(16*x+self.screen_rect.left,16*y+self.screen_rect.top,16,16),self.speed))
     
     def update(self):
         self.group_rect.move_ip(-self.speed,0)
