@@ -7,13 +7,22 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__()
         #sheet = SpriteSheet(pygame.image.load('assets/pug_sheet.png').convert(),32,32)
         sheet = pygame.image.load('assets/pug_sheet.png').convert()
-        self.images = [pygame.Surface((32, 32)).convert() for i in range(6)]
-        self.image = pygame.Surface((32, 32)).convert()
-        self.image.blit(sheet, (0, 0), (0, 0, 32, 32))
-        self.image.set_colorkey((0, 174, 0))
+        tiles = ((0, 0),(0, 32),(0, 64),(0, 96),(32, 0),(32, 32))
+        self.images = []
+        for i in range(6):
+            image = pygame.Surface((32, 32)).convert()
+            image.blit(sheet,(0,0),(*tiles[i],32,32))
+            image.set_colorkey((0, 174, 0))
+            self.images.append(image)
+        self.cur_image = 0
+        self.image = self.images[self.cur_image]
         self.rect = Rect(375,550,32,32)
 
     def update(self, pressed_keys):
+        self.cur_image += 1
+        if self.cur_image == 6:
+            self.cur_image = 0
+        self.image = self.images[self.cur_image]
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -5)
         if pressed_keys[K_DOWN]:
