@@ -17,21 +17,29 @@ class Player(pygame.sprite.Sprite):
         self.cur_image = 0
         self.image = self.images[self.cur_image]
         self.rect = Rect(375,550,32,32)
+        self.vertical_movement = None
 
     def update(self, pressed_keys):
         self.cur_image += 1
         if self.cur_image == 6:
             self.cur_image = 0
         self.image = self.images[self.cur_image]
+
         if pressed_keys[K_UP]:
-            self.rect.move_ip(0, -5)
+            if not self.vertical_movement:
+                self.vertical_movement = -5
         if pressed_keys[K_DOWN]:
             self.rect.move_ip(0, 5)
         if pressed_keys[K_LEFT]:
             self.rect.move_ip(-5, 0)
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(5, 0)
-
+        if self.vertical_movement:    
+            self.vertical_movement += 0.2
+            self.rect.move_ip(0, self.vertical_movement)
+            if self.rect.bottom >= 516:
+                self.vertical_movement=None
+                
         # Keep player on the screen
         if self.rect.left < 0:
             self.rect.left = 0
