@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import pygame
 from pygame.locals import *
 
@@ -51,3 +52,5 @@ class MovingSprite(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.move_ip(self._x_speed, self._x_speed)
+
+#if __name__ == "__main__":
