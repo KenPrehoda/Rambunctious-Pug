@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from sprites import SpriteSheet
+from itertools import cycle
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -14,16 +15,17 @@ class Player(pygame.sprite.Sprite):
             image.blit(sheet,(0,0),(*tiles[i],32,32))
             image.set_colorkey((0, 174, 0))
             self.images.append(image)
-        self.cur_image = 0
-        self.image = self.images[self.cur_image]
+        self.cur_image = cycle(self.images)
+        self.image = next(self.cur_image)
         self.rect = Rect(375,550,32,32)
         self.vertical_movement = None
+        self.ticks = pygame.time.get_ticks()
 
     def update(self, pressed_keys):
-        self.cur_image += 1
-        if self.cur_image == 6:
-            self.cur_image = 0
-        self.image = self.images[self.cur_image]
+        ticks = pygame.time.get_ticks()
+        if ticks > self.ticks + 100:
+            self.ticks = ticks
+            self.image = next(self.cur_image)
 
         if pressed_keys[K_UP]:
             if not self.vertical_movement:
@@ -37,7 +39,7 @@ class Player(pygame.sprite.Sprite):
         if self.vertical_movement:    
             self.vertical_movement += 0.2
             self.rect.move_ip(0, self.vertical_movement)
-            if self.rect.bottom >= 516:
+            if self.rect.bottom >= 523:
                 self.vertical_movement=None
                 
         # Keep player on the screen
@@ -47,5 +49,5 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = 800
         if self.rect.top <= 0:
             self.rect.top = 0
-        elif self.rect.bottom >= 516:
-            self.rect.bottom = 516
+        elif self.rect.bottom >= 523:
+            self.rect.bottom = 523
