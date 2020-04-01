@@ -14,10 +14,11 @@ class Player(pygame.sprite.Sprite):
             image = pygame.Surface((32, 32)).convert()
             image.blit(sheet,(0,0),(*tiles[i],32,32))
             image.set_colorkey((0, 174, 0))
+            image = pygame.transform.scale2x(image)
             self.images.append(image)
         self.cur_image = cycle(self.images)
         self.image = next(self.cur_image)
-        self.rect = Rect(375,550,32,32)
+        self.rect = Rect(375,550,64,64)
         self.vertical_movement = None
         self.ticks = pygame.time.get_ticks()
 
@@ -39,7 +40,7 @@ class Player(pygame.sprite.Sprite):
         if self.vertical_movement:    
             self.vertical_movement += 0.2
             self.rect.move_ip(0, self.vertical_movement)
-            if self.rect.bottom >= 523:
+            if self.rect.bottom >= 532:
                 self.vertical_movement=None
                 
         # Keep player on the screen
@@ -49,5 +50,5 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = 800
         if self.rect.top <= 0:
             self.rect.top = 0
-        elif self.rect.bottom >= 523:
-            self.rect.bottom = 523
+        elif self.rect.bottom >= 532:
+            self.rect.bottom = 532
