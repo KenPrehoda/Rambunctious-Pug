@@ -31,9 +31,8 @@ background.fill((135, 206, 250))
 enemies = pygame.sprite.Group()
 clouds = pygame.sprite.Group()
 ground = Ground(Rect(0,500,800,300),5)
-all_sprites = pygame.sprite.Group()
-all_sprites.add(player)
-
+player_group = pygame.sprite.Group()
+player_group.add(player)
 running = True
 
 while running:
@@ -46,10 +45,8 @@ while running:
         elif event.type == ADDENEMY:
             new_enemy = Enemy()
             enemies.add(new_enemy)
-            all_sprites.add(new_enemy)
         elif event.type == ADDCLOUD:
             new_cloud = Cloud()
-            all_sprites.add(new_cloud)
             clouds.add(new_cloud)
     screen.blit(background, (0, 0))
     pressed_keys = pygame.key.get_pressed()
@@ -58,7 +55,9 @@ while running:
     clouds.update()
     ground.update()
     ground.draw(screen)
-    all_sprites.draw(screen)
+    clouds.draw(screen)
+    enemies.draw(screen)
+    player_group.draw(screen)
 
     if pygame.sprite.spritecollideany(player, enemies):
         player.kill()
