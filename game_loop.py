@@ -9,10 +9,9 @@ framelock = pygame.time.Clock()
 
 # initialize pygame
 pygame.init()
-SCREEN_SIZE = (800,600)
-# create the screen object
-# here we pass it a size of 800x600
-screen = pygame.display.set_mode(SCREEN_SIZE)
+SCREEN_SIZE = (1920,1080)
+screen = pygame.display.set_mode(SCREEN_SIZE,
+                                 flags=pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
 
 # Create a custom event for adding a new (anything)_
 ADDCLOUD = pygame.USEREVENT + 2
@@ -26,7 +25,7 @@ background = pygame.Surface(
 background.fill((135, 206, 250))
 
 clouds = pygame.sprite.Group()
-ground = Ground(Rect(0,500,800,300),5)
+ground = Ground(screen.get_rect(), Rect(0,860,1920,300),5)
 player_group = pygame.sprite.Group()
 player_group.add(player)
 running = True
