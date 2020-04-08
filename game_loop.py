@@ -2,7 +2,6 @@
 import pygame
 from player import Player
 from cloud import Cloud
-from enemy import Enemy
 from ground import Ground
 # import pygame.locals for easier access to key coordinates
 from pygame.locals import *
@@ -15,9 +14,7 @@ SCREEN_SIZE = (800,600)
 # here we pass it a size of 800x600
 screen = pygame.display.set_mode(SCREEN_SIZE)
 
-# Create a custom event for adding a new enemy.
-ADDENEMY = pygame.USEREVENT + 1
-pygame.time.set_timer(ADDENEMY, 250)
+# Create a custom event for adding a new (anything)_
 ADDCLOUD = pygame.USEREVENT + 2
 pygame.time.set_timer(ADDCLOUD, 1000)
 
@@ -28,7 +25,6 @@ background = pygame.Surface(
     screen.get_size(), pygame.DOUBLEBUF | pygame.HWSURFACE,32)
 background.fill((135, 206, 250))
 
-enemies = pygame.sprite.Group()
 clouds = pygame.sprite.Group()
 ground = Ground(Rect(0,500,800,300),5)
 player_group = pygame.sprite.Group()
@@ -42,25 +38,18 @@ while running:
                 running = False
         elif event.type == QUIT:
             running = False
-        elif event.type == ADDENEMY:
-            new_enemy = Enemy()
-            enemies.add(new_enemy)
         elif event.type == ADDCLOUD:
             new_cloud = Cloud()
             clouds.add(new_cloud)
     screen.blit(background, (0, 0))
     pressed_keys = pygame.key.get_pressed()
     player.update(pressed_keys)
-    enemies.update()
     clouds.update()
     ground.update()
     ground.draw(screen)
     clouds.draw(screen)
-    enemies.draw(screen)
     player_group.draw(screen)
 
-    if pygame.sprite.spritecollideany(player, enemies):
-        player.kill()
 
     
     

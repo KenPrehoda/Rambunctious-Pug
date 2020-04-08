@@ -20,6 +20,9 @@ class Ground(pygame.sprite.Group):
         super(Ground, self).__init__()
         self.screen_rect = rect
         self.speed = speed
+        randdirt = ["dirt","dirt2","dirt3"]
+        randgrass = ["grass","grass2","grass3"]
+        randplant = ["plant","plant 2","plant 3"]
         x_tiles = int((self.screen_rect.width/16) + 2)
         y_tiles = int((self.screen_rect.height/16) + 1)
         self.group_rect = Rect(self.screen_rect.left,self.screen_rect.top,x_tiles*16,y_tiles*16)
@@ -27,13 +30,13 @@ class Ground(pygame.sprite.Group):
             for x in range(x_tiles):
                 if y == 0:
                     if random.randint(1,10) > 8:
-                        type = 'plant'
+                        type = randplant[random.randint(0, len(randplant)-1)]
                     else:
                         type = None
                 elif y == 1:
-                    type = 'grass'
+                    type = randgrass[random.randint(0,len(randgrass)-1)]
                 else:
-                    type = 'dirt'
+                    type = randdirt[random.randint(0, len(randdirt)-1)]
                 if type:
                     self.add(GroundTile(type,Rect(16*x+self.screen_rect.left,16*y+self.screen_rect.top,16,16),self.speed))
     
