@@ -25,7 +25,7 @@ background = pygame.Surface(
 background.fill((135, 206, 250))
 
 clouds = pygame.sprite.Group()
-ground = Ground(screen.get_rect(), Rect(0,660,1920,300),5)
+ground = Ground(screen.get_rect(), Rect(0,560,1920,300),5)
 player_group = pygame.sprite.Group()
 player_group.add(player)
 running = True

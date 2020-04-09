@@ -23,7 +23,7 @@ class GroundTile(pygame.sprite.Sprite):
     def load_tiles():
         if GroundTile.ground_tiles == None:
             unscaled = {i:
-                        pygame.image.load(f'assets/{i}.png').convert_alpha() for i in tiles}
+            pygame.transform.scale2x(pygame.image.load(f'assets/{i}.png').convert_alpha()) for i in tiles}
             GroundTile.ground_tiles = unscaled
            #GroundTile.ground_tiles = {k:
             #    pygame.transform.smoothscale(v,(64,64)) for (k, v) in unscaled.items()}
@@ -36,6 +36,7 @@ class FlatChunk(pygame.sprite.Sprite):
     def __init__(self, rect):
         super(FlatChunk, self).__init__()
         self.image = pygame.Surface([rect.width, rect.height])
+        self.image.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = rect
         GroundTile.load_tiles()
         tile_dimension = GroundTile.ground_tiles['dirt'].get_rect().width
@@ -72,14 +73,23 @@ class Ground(pygame.sprite.Group):
         self.speed = speed
         print(screen, ground_surface_bound)
         self.add(FlatChunk(Rect(screen.left, self.surface_bound_rect.top + \
-            self.surface_bound_rect.height, screen.width*2, \
+            self.surface_bound_rect.height, screen.width*1.25, \
             screen.top + screen.height-(self.surface_bound_rect.top + \
             self.surface_bound_rect.height))))
     
-
     def update(self):
+        furthest_right = 0
         for s in self.sprites():
             s.rect.move_ip(-self.speed, 0)
+            if s.rect.right > furthest_right:
+                furthest_right = s.rect.right
+            if s.rect.right < 0:
+                s.kill()
+        if furthest_right < self.screen_rect.right:
+            self.add(FlatChunk(Rect(self.screen_rect.right-6, self.surface_bound_rect.top +
+                                    self.surface_bound_rect.height, self.screen_rect.width/2,
+                                    self.screen_rect.top + self.screen_rect.height-(self.surface_bound_rect.top +
+                                                                self.surface_bound_rect.height))))
 
         super(Ground, self).update()
 
