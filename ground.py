@@ -34,15 +34,16 @@ class GroundTile(pygame.sprite.Sprite):
 
 class FlatChunk(pygame.sprite.Sprite):
     def __init__(self, rect):
-        print(rect.width,rect.height)
+        super(FlatChunk, self).__init__()
         self.image = pygame.Surface([rect.width, rect.height])
         self.rect = rect
         GroundTile.load_tiles()
-        tile_dimension = GroundTile.ground_tiles['dirt'].rect.width
+        tile_dimension = GroundTile.ground_tiles['dirt'].get_rect().width
         x_tiles = int((self.rect.width/tile_dimension)+1)
         y_tiles = int((self.rect.height/tile_dimension) + 1)
         for y in range(y_tiles):
             for x in range(x_tiles):
+                tile = None
                 if y == 0:
                     if random.randint(1,10) > 8:
                         tile = GroundTile.ground_tiles[plant_tiles[random.randint(
@@ -53,11 +54,11 @@ class FlatChunk(pygame.sprite.Sprite):
                     tile = GroundTile.ground_tiles[grass_tiles[random.randint(
                         0, len(grass_tiles)-1)]]
                 else:
-                    tile = GroundTile.ground_tiles[random.randint(
-                        0, len(dirt_tiles)-1)]
-                if type:
-                    tile.rect = Rect(tile_dimension*x,tile_dimension*y,tile_dimension,tile_dimension)
-                    tile.draw(self.image)
+                    tile = GroundTile.ground_tiles[dirt_tiles[random.randint(
+                        0, len(dirt_tiles)-1)]]
+                if tile:
+                    self.image.blit(tile, Rect(
+                        tile_dimension*x, tile_dimension*y, tile_dimension, tile_dimension))
 
 class Ground(pygame.sprite.Group):
     def __init__(self,screen,ground_surface_bound,speed):
@@ -69,11 +70,12 @@ class Ground(pygame.sprite.Group):
         self.screen_rect = screen
         self.surface_bound_rect = ground_surface_bound
         self.speed = speed
-        self.add(FlatChunk(Rect(screen.left, self.surface_bound_rect.top +
-                                self.surface_bound_rect.height, screen.width*2, screen.height-(self.surface_bound_rect.top +
-                                                                                               self.surface_bound_rect.height))))
+        print(screen, ground_surface_bound)
+        self.add(FlatChunk(Rect(screen.left, self.surface_bound_rect.top + \
+            self.surface_bound_rect.height, screen.width*2, \
+            screen.top + screen.height-(self.surface_bound_rect.top + \
+            self.surface_bound_rect.height))))
     
-
 
     def update(self):
         for s in self.sprites():
