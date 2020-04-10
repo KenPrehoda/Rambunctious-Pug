@@ -5,10 +5,10 @@ from cloud import Cloud
 from ground import Ground
 # import pygame.locals for easier access to key coordinates
 from pygame.locals import *
-framelock = pygame.time.Clock()
-
-# initialize pygame
 pygame.init()
+framelock = pygame.time.Clock()
+pygame.mouse.set_visible(False)
+# initialize pygame
 SCREEN_SIZE = (1920,1080)
 screen = pygame.display.set_mode(SCREEN_SIZE,
                                  flags=pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
@@ -48,10 +48,6 @@ while running:
     ground.draw(screen)
     clouds.draw(screen)
     player_group.draw(screen)
-
-
-    
-    
 
     pygame.display.flip()
     framelock.tick(60)

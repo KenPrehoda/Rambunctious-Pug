@@ -12,7 +12,7 @@ class Cloud(pygame.sprite.Sprite):
             Cloud.cloud_image.set_colorkey((0, 0, 0), RLEACCEL)
         self.image = Cloud.cloud_image
         self.rect = self.image.get_rect(center=(
-            random.randint(820, 900), random.randint(0, 400))
+            random.randint(2000, 2200), random.randint(0, 600))
         )
         self.speed = random.randint(400, 550)/100.0
 

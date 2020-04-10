@@ -86,7 +86,7 @@ class Ground(pygame.sprite.Group):
             if s.rect.right < 0:
                 s.kill()
         if furthest_right < self.screen_rect.right:
-            self.add(FlatChunk(Rect(self.screen_rect.right-6, self.surface_bound_rect.top +
+            self.add(FlatChunk(Rect(self.screen_rect.right-(self.speed+1), self.surface_bound_rect.top +
                                     self.surface_bound_rect.height, self.screen_rect.width/2,
                                     self.screen_rect.top + self.screen_rect.height-(self.surface_bound_rect.top +
                                                                 self.surface_bound_rect.height))))

@@ -18,7 +18,8 @@ class Player(pygame.sprite.Sprite):
             self.images.append(image)
         self.cur_image = cycle(self.images)
         self.image = next(self.cur_image)
-        self.rect = Rect(375,550,64,64)
+        self.ground_level = 910
+        self.rect = Rect(850,self.ground_level,64,64)
         self.vertical_movement = None
         self.ticks = pygame.time.get_ticks()
 
@@ -40,15 +41,15 @@ class Player(pygame.sprite.Sprite):
         if self.vertical_movement:    
             self.vertical_movement += 0.2
             self.rect.move_ip(0, self.vertical_movement)
-            if self.rect.bottom >= 532:
+            if self.rect.bottom >= self.ground_level:
                 self.vertical_movement=None
                 
         # Keep player on the screen
         if self.rect.left < 0:
             self.rect.left = 0
-        elif self.rect.right > 800:
-            self.rect.right = 800
+        elif self.rect.right > 1920:
+            self.rect.right = 1920
         if self.rect.top <= 0:
             self.rect.top = 0
-        elif self.rect.bottom >= 532:
-            self.rect.bottom = 532
+        elif self.rect.bottom >= self.ground_level:
+            self.rect.bottom = self.ground_level
