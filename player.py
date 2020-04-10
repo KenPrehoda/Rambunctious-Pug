@@ -31,7 +31,7 @@ class Player(pygame.sprite.Sprite):
 
         if pressed_keys[K_UP]:
             if not self.vertical_movement:
-                self.vertical_movement = -5
+                self.vertical_movement = -6.75
         if pressed_keys[K_DOWN]:
             self.rect.move_ip(0, 5)
         if pressed_keys[K_LEFT]:
@@ -39,7 +39,7 @@ class Player(pygame.sprite.Sprite):
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(5, 0)
         if self.vertical_movement:    
-            self.vertical_movement += 0.2
+            self.vertical_movement += 0.175
             self.rect.move_ip(0, self.vertical_movement)
             if self.rect.bottom >= self.ground_level:
                 self.vertical_movement=None
